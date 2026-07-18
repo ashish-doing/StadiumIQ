@@ -19,4 +19,4 @@ COPY frontend/ ./frontend/
 EXPOSE 7860
 
 # Start FastAPI application
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "7860"]
+CMD uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-7860}
