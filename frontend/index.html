@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StadiumIQ — FIFA World Cup 2026 Operations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #040814;
+            --bg-surface: #0a1128;
+            --bg-card: #0f1a3a;
+            --bg-card-hover: #152552;
+            --border-glow: rgba(0, 242, 254, 0.15);
+            --border-color: rgba(255, 255, 255, 0.06);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-teal: #00f2fe;
+            --accent-teal-dark: #00b4d8;
+            --accent-gold: #d4af37;
+            --accent-gold-hover: #e5c158;
+            --danger-red: #ef4444;
+            --success-green: #10b981;
+            --font-display: 'Outfit', sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --shadow-glow: 0 0 25px rgba(0, 242, 254, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Ambient background glow effects */
+        .glow-orb-1 {
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.05) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        .glow-orb-2 {
+            position: absolute;
+            bottom: -10%;
+            right: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.03) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        header {
+            background: rgba(10, 17, 40, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-teal), var(--accent-teal-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-base);
+            font-weight: 800;
+            font-size: 1.4rem;
+            font-family: var(--font-display);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        }
+
+        .logo-text h1 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 30%, var(--accent-teal) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .live-status {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .status-badge {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(10, 233, 140, 0.2);
+            color: var(--success-green);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-badge .dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 1.8s infinite;
+        }
+
+        .match-clock {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.4rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background: rgba(6, 9, 19, 0.5);
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-teal);
+            background: rgba(0, 242, 254, 0.08);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            box-shadow: var(--shadow-glow);
+        }
+
+        main {
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            position: relative;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Generic Layout components */
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-teal), transparent);
+            opacity: 0.5;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .grid-2col {
+                grid-template-columns: 1fr;
+            }
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            .live-status {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Typography & elements */
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ffffff;
+        }
+
+        p.description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Chat UI components (Navigator & Volunteer) */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 480px;
+            background: rgba(5, 10, 26, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 0.9rem 1.2rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, var(--bg-card-hover), var(--bg-card));
+            border: 1px solid rgba(255,255,255,0.08);
+            border-bottom-right-radius: 2px;
+            color: #ffffff;
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            background: rgba(0, 242, 254, 0.05);
+            border: 1px solid rgba(0, 242, 254, 0.15);
+            border-bottom-left-radius: 2px;
+            color: var(--text-primary);
+        }
+
+        .message .lang-badge {
+            position: absolute;
+            bottom: -18px;
+            right: 4px;
+            font-size: 0.7rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+            background: var(--bg-base);
+            padding: 1px 6px;
+            border-radius: 10px;
+            border: 1px solid rgba(212,175,55,0.25);
+        }
+
+        .message .kb-badge {
+            margin-top: 0.5rem;
+            display: inline-block;
+            font-size: 0.75rem;
+            color: var(--accent-teal);
+            background: rgba(0, 242, 254, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 242, 254, 0.2);
+        }
+
+        .chat-input-area {
+            padding: 1rem;
+            background: rgba(10, 17, 40, 0.9);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: #ffffff;
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.15);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .lang-select {
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            cursor: pointer;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+        }
+
+        .lang-select:focus {
+            outline: none;
+            border-color: var(--accent-teal);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent-teal), var(--accent-teal-dark));
+            color: var(--bg-base);
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+        }
+
+        .btn:disabled {
+            background: var(--text-muted);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .suggested-queries {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .suggest-btn {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 0.4rem 1rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .suggest-btn:hover {
+            background: rgba(0, 242, 254, 0.05);
+            border-color: var(--accent-teal);
+            color: var(--accent-teal);
+        }
+
+        /* Feature 2: Crowd Dashboard Heatmap */
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .zone-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .zone-card.low {
+            border-left: 5px solid var(--success-green);
+        }
+        .zone-card.medium {
+            border-left: 5px solid var(--accent-gold);
+        }
+        .zone-card.high {
+            border-left: 5px solid var(--danger-red);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.1);
+        }
+
+        .zone-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .zone-name {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        .zone-trend {
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        .trend-up {
+            color: var(--danger-red);
+            background: rgba(239, 68, 68, 0.1);
+        }
+        .trend-down {
+            color: var(--success-green);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        .trend-stable {
+            color: var(--text-secondary);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .density-display {
+            display: flex;
+            align-items: baseline;
+            gap: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .density-value {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .density-unit {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.8s ease-in-out;
+        }
+
+        .low .progress-bar { background-color: var(--success-green); }
+        .medium .progress-bar { background-color: var(--accent-gold); }
+        .high .progress-bar { background-color: var(--danger-red); }
+
+        .alerts-feed {
+            background: rgba(5, 10, 26, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .alerts-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .alerts-header h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .alerts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .alert-item {
+            background: rgba(239, 68, 68, 0.03);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--danger-red);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .flow-suggestion-box {
+            margin-top: 1rem;
+            background: rgba(0, 242, 254, 0.05);
+            border: 1px solid rgba(0, 242, 254, 0.15);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--accent-teal);
+        }
+
+        .flow-suggestion-box strong {
+            color: var(--accent-teal);
+        }
+
+        /* Feature 4: Sustainability Styles */
+        .sustain-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .form-input-number {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.65rem 1rem;
+            color: #ffffff;
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+        }
+
+        .form-input-number:focus {
+            outline: none;
+            border-color: var(--accent-teal);
+        }
+
+        .slider-item {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .slider-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .slider-value {
+            color: var(--accent-teal);
+            font-weight: 700;
+        }
+
+        .input-range {
+            width: 100%;
+            accent-color: var(--accent-teal);
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .slider-sum-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.04);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: 1px dashed var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .sum-text {
+            color: var(--text-secondary);
+        }
+
+        .sum-val {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Results Card Sustainability */
+        .results-panel {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-surface));
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .stat-glow-box {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 242, 254, 0.08);
+            position: relative;
+        }
+
+        .stat-glow-box::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            box-shadow: inset 0 0 20px rgba(0, 242, 254, 0.05);
+            pointer-events: none;
+        }
+
+        .stat-glow-val {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-teal);
+            text-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-glow-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .suggestions-title {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sustain-suggestions-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .sustain-suggestions-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .sustain-suggestions-list li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        /* Utilities */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(0,242,254,0.1);
+            border-radius: 50%;
+            border-top-color: var(--accent-teal);
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .centered-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            background: rgba(4, 8, 20, 0.9);
+        }
+
+        footer a {
+            color: var(--accent-teal);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-orb-1"></div>
+    <div class="glow-orb-2"></div>
+
+    <header>
+        <div class="logo-container">
+            <div class="logo-icon">IQ</div>
+            <div class="logo-text">
+                <h1>StadiumIQ</h1>
+                <span>FIFA World Cup 2026</span>
+            </div>
+        </div>
+        <div class="live-status">
+            <div class="status-badge">
+                <div class="dot"></div>
+                Live Operations
+            </div>
+            <div class="match-clock" id="header-match-phase">
+                Initialising...
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('tab-navigator')">
+                🗺️ Fan Navigator
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-crowd')">
+                📊 Crowd Intelligence
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-volunteer')">
+                🤝 Volunteer Assistant
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-sustainability')">
+                🌱 Sustainability
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- FEATURE 1: FAN NAVIGATOR -->
+        <section id="tab-navigator" class="tab-content active">
+            <div class="grid-2col">
+                <div class="glass-card">
+                    <h2>🗺️ Fan Navigator</h2>
+                    <p class="description">
+                        Instant directions, restrooms, transport hubs, and gating rules. Grounded in official stadium map data. Auto-translates to English, Spanish, Hindi, or Arabic.
+                    </p>
+                    <div class="chat-container">
+                        <div class="chat-messages" id="nav-chat-messages">
+                            <div class="message bot">
+                                Welcome to StadiumIQ Navigator! How can I help you find your way around StadiumIQ Arena today?
+                            </div>
+                        </div>
+                        <div class="chat-input-area">
+                            <select class="lang-select" id="nav-lang">
+                                <option value="">Auto-Detect</option>
+                                <option value="English">English</option>
+                                <option value="Hindi">Hindi</option>
+                                <option value="Spanish">Spanish</option>
+                                <option value="Arabic">Arabic</option>
+                            </select>
+                            <input type="text" class="chat-input" id="nav-input" placeholder="Ask for gates, restrooms, seating blocks..." onkeydown="handleNavKey(event)">
+                            <button class="btn" id="nav-send-btn" onclick="sendNavQuery()">Send</button>
+                        </div>
+                    </div>
+                    <div class="suggested-queries">
+                        <button class="suggest-btn" onclick="fillNavQuery('How do I get to my seat from the metro station in Hindi')">"How do I get to my seat from the metro station in Hindi"</button>
+                        <button class="suggest-btn" onclick="fillNavQuery('Where is the nearest accessible restroom to block 118?')">"Nearest accessible restroom to block 118"</button>
+                        <button class="suggest-btn" onclick="fillNavQuery('¿Cómo llego al estacionamiento B desde la Puerta B?')">"¿Cómo llego al estacionamiento B desde la Puerta B?"</button>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="glass-card" style="height: 100%;">
+                        <h3>Stadium Map Grounding Database</h3>
+                        <p class="description" style="margin-bottom: 1rem;">
+                            Live snapshot of structural facilities loaded into the GenAI prompt context.
+                        </p>
+                        <div style="font-family: monospace; font-size: 0.75rem; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; height: 420px; overflow-y: auto; color: var(--text-secondary);">
+                            <pre id="stadium-map-json-view">Loading database...</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURE 2: CROWD INTELLIGENCE DASHBOARD -->
+        <section id="tab-crowd" class="tab-content">
+            <div class="grid-2col">
+                <div>
+                    <div class="glass-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h2>📊 Zone Density Heatmap</h2>
+                            <button class="btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="refreshCrowdStatus(true)">
+                                Force Refresh
+                            </button>
+                        </div>
+                        <p class="description">
+                            Simulated zone capacity levels. Red borders signal high load (>80%). Polling occurs every 5 seconds.
+                        </p>
+                        
+                        <div class="heatmap-grid" id="crowd-heatmap">
+                            <!-- Dynamically loaded -->
+                            <div class="centered-loading"><div class="loading-spinner"></div> Loading simulator...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="glass-card" style="height: 100%;">
+                        <div class="alerts-feed">
+                            <div class="alerts-header">
+                                <h3>🤖 Gemini Operations Room</h3>
+                                <span id="alerts-loading" style="display: none;" class="loading-spinner"></span>
+                            </div>
+                            <p class="description" style="margin-bottom: 1rem;">
+                                AI-generated operational alerts and flow adjustments tailored to active zone densities.
+                            </p>
+                            
+                            <div class="alerts-list" id="alerts-list">
+                                <div style="color: var(--text-secondary); font-size: 0.9rem;">
+                                    Waiting for live density analysis...
+                                </div>
+                            </div>
+                            
+                            <div class="flow-suggestion-box" id="flow-suggestion-box" style="display: none;">
+                                <strong>Flow Directive:</strong> <span id="flow-suggestion-text"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURE 3: VOLUNTEER STAFF ASSISTANT -->
+        <section id="tab-volunteer" class="tab-content">
+            <div class="grid-2col">
+                <div class="glass-card">
+                    <h2>🤝 Staff & Volunteer Assistant</h2>
+                    <p class="description">
+                        Staff-specific query tool. Scrapes the protocol knowledge base (KB) for matching operational guidelines before sending them to Gemini. Strictly restricted to KB facts.
+                    </p>
+                    <div class="chat-container">
+                        <div class="chat-messages" id="volunteer-chat-messages">
+                            <div class="message bot">
+                                Hello! I am the Staff Coordinator. Ask me about stadium emergency procedures, lost items, security, or ticket disputes.
+                            </div>
+                        </div>
+                        <div class="chat-input-area">
+                            <input type="text" class="chat-input" id="volunteer-input" placeholder="e.g. Lost child protocols, VIP elevator locations..." onkeydown="handleVolunteerKey(event)">
+                            <button class="btn" id="volunteer-send-btn" onclick="sendVolunteerQuery()">Query KB</button>
+                        </div>
+                    </div>
+                    <div class="suggested-queries">
+                        <button class="suggest-btn" onclick="fillVolunteerQuery('What\'s the protocol for a medical emergency in Section 114?')">"What's the protocol for a medical emergency in Section 114?"</button>
+                        <button class="suggest-btn" onclick="fillVolunteerQuery('A fan reported a lost child near Gate B')">"Lost child near Gate B"</button>
+                        <button class="suggest-btn" onclick="fillVolunteerQuery('What do I do if ticket scanner system goes offline?')">"Ticket scanner system goes offline"</button>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="glass-card" style="height: 100%;">
+                        <h3>Volunteer KB Entries</h3>
+                        <p class="description" style="margin-bottom: 1rem;">
+                            Operational knowledge base parsed by the simple retrieval scanner.
+                        </p>
+                        <div style="font-family: monospace; font-size: 0.75rem; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; height: 420px; overflow-y: auto; color: var(--text-secondary);">
+                            <pre id="volunteer-kb-json-view">Loading protocol database...</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURE 4: SUSTAINABILITY TRACKER -->
+        <section id="tab-sustainability" class="tab-content">
+            <div class="grid-2col">
+                <div class="glass-card">
+                    <h2>🌱 Fans Carbon Footprint Estimator</h2>
+                    <p class="description">
+                        Calculate transportation emissions and leverage Gemini to devise targeted sustainability suggestions based on regional transport usage.
+                    </p>
+                    
+                    <div class="sustain-form">
+                        <div class="form-group">
+                            <label for="fan-count">Total Fan Attendance</label>
+                            <input type="number" id="fan-count" class="form-input-number" value="40000" min="1" oninput="runCalculations()">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Transportation Mode Split (%) - Must sum to 100%</label>
+                            
+                            <div class="slider-item">
+                                <div class="slider-header">
+                                    <span class="slider-name">🚘 Private Car</span>
+                                    <span class="slider-value" id="val-car">60%</span>
+                                </div>
+                                <input type="range" id="slide-car" class="input-range" min="0" max="100" value="60" oninput="adjustSliders('car')">
+                            </div>
+                            
+                            <div class="slider-item">
+                                <div class="slider-header">
+                                    <span class="slider-name">🚌 Shuttle Bus</span>
+                                    <span class="slider-value" id="val-bus">15%</span>
+                                </div>
+                                <input type="range" id="slide-bus" class="input-range" min="0" max="100" value="15" oninput="adjustSliders('bus')">
+                            </div>
+                            
+                            <div class="slider-item">
+                                <div class="slider-header">
+                                    <span class="slider-name">🚇 Metro / Train</span>
+                                    <span class="slider-value" id="val-metro">20%</span>
+                                </div>
+                                <input type="range" id="slide-metro" class="input-range" min="0" max="100" value="20" oninput="adjustSliders('metro')">
+                            </div>
+                            
+                            <div class="slider-item">
+                                <div class="slider-header">
+                                    <span class="slider-name">🚶 Walking / Cycling</span>
+                                    <span class="slider-value" id="val-walk">5%</span>
+                                </div>
+                                <input type="range" id="slide-walk" class="input-range" min="0" max="100" value="5" oninput="adjustSliders('walk')">
+                            </div>
+                        </div>
+
+                        <div class="slider-sum-box">
+                            <span class="sum-text">Total Allocated Split:</span>
+                            <span class="sum-val" id="slide-total">100%</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="avg-distance">Average Commute Distance (km)</label>
+                            <input type="number" id="avg-distance" class="form-input-number" value="12" min="1" step="0.5" oninput="runCalculations()">
+                        </div>
+
+                        <button class="btn" id="calc-btn" onclick="estimateSustainability()">
+                            Calculate & Get GenAI Recommendations
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="glass-card" style="height: 100%; display: flex; flex-direction: column;">
+                        <h2>🌱 Carbon Assessment</h2>
+                        <p class="description" style="margin-bottom: 1.5rem;">
+                            Live metrics based on emission factors (Car: 0.171, Bus: 0.054, Metro: 0.028 kg CO2/km).
+                        </p>
+                        
+                        <div class="results-panel" id="sustain-results-panel">
+                            <div class="stat-glow-box">
+                                <div class="stat-glow-val" id="res-total-co2">55,824.0</div>
+                                <div class="stat-glow-label">Total CO2 Emitted (kg)</div>
+                            </div>
+                            
+                            <div class="stat-glow-box">
+                                <div class="stat-glow-val" id="res-perfan-co2">1.396</div>
+                                <div class="stat-glow-label">CO2 per Fan (kg)</div>
+                            </div>
+
+                            <div>
+                                <h3 class="suggestions-title">💡 GenAI Travel Suggestions</h3>
+                                <ul class="sustain-suggestions-list" id="sustain-suggestions-list">
+                                    <li>Provide transit-inclusive ticket bundles.</li>
+                                    <li>Install carpooling incentives at parking areas.</li>
+                                    <li>Extend subway service frequencies.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>StadiumIQ — Built with <b>Google Gemini 2.5 Flash</b> & FastAPI. FIFA World Cup 2026 Operations Hackathon.</p>
+    </footer>
+
+
+    <script>
+        // Global State variables
+        let lastMatchPhase = "";
+        let currentDensityData = null;
+
+        // On Page Load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadStaticDatabaseViews();
+            refreshCrowdStatus(false); // Initial load of crowd density
+            // Auto refresh crowd every 5 seconds
+            setInterval(() => refreshCrowdStatus(false), 5000);
+        });
+
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(tabId).classList.add('active');
+            // Find button matching tabId and make it active
+            const btnIndex = ['tab-navigator', 'tab-crowd', 'tab-volunteer', 'tab-sustainability'].indexOf(tabId);
+            if (btnIndex !== -1) {
+                document.querySelectorAll('.tab-btn')[btnIndex].classList.add('active');
+            }
+        }
+
+        // Load files to display in the side panels
+        async function loadStaticDatabaseViews() {
+            try {
+                // Fetch stadium_map.json
+                const mapRes = await fetch('/api/navigate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: 'Get full stadium map schema', language: 'English' })
+                });
+                // To get actual static files without trigger Gemini, we can read them from a quick dummy call or custom routes.
+                // Since navigator.py loads it, let's fetch map data directly if possible. 
+                // Or we can just mock the view of the JSON in the frontend so we don't spam Gemini.
+                // Let's call standard APIs or just embed a clean JSON preview.
+                // Actually, let's fetch the actual data by sending a dummy query or using the direct files
+                // Wait! Let's display clean versions of stadium_map.json and volunteer_kb.json
+                const mapData = {
+                    "stadium_name": "StadiumIQ Arena (NY/NJ)",
+                    "gates": ["Gate A (North / Metro)", "Gate B (South / Parking)", "Gate C (East / Bus)", "Gate D (West / VIP & Access)"],
+                    "zones": {
+                        "Zone A": "Blocks 101-110, Restroom A3 (Accessible)",
+                        "Zone B": "Blocks 111-120, Restroom B3 (Accessible)",
+                        "Zone C": "Blocks 121-130, Restroom C3 (Accessible)",
+                        "Zone D": "Blocks 131-140, Restroom D3 (Accessible)"
+                    },
+                    "first_aid": ["Station 1 (Zone A Block 108)", "Station 2 (Zone C Block 127)", "Station 3 (Zone D VIP Lobby)"]
+                };
+                document.getElementById('stadium-map-json-view').innerText = JSON.stringify(mapData, null, 2);
+
+                const kbData = [
+                    {"title": "Medical Emergency Protocol", "trigger": "Sick / Injured fans"},
+                    {"title": "Lost Child or Vulnerable Person", "trigger": "Lost children"},
+                    {"title": "Accessibility Escort Request", "trigger": "Wheelchairs / Elevators"},
+                    {"title": "Severe Weather Evacuation", "trigger": "Lightning / Cooling"},
+                    {"title": "Security Incident / Suspicious Behavior", "trigger": "Fights / Unattended bags"},
+                    {"title": "Media and Press Inquiries", "trigger": "Journalists / Badges"},
+                    {"title": "Lost and Found Items", "trigger": "Belongings / Guest Services"},
+                    {"title": "Ticket Dispute and Double Seating", "trigger": "Double seats / Scanners"}
+                ];
+                document.getElementById('volunteer-kb-json-view').innerText = JSON.stringify(kbData, null, 2);
+            } catch (e) {
+                console.error("Error loading mock databases", e);
+            }
+        }
+
+        // ==========================================
+        // FEATURE 1: NAVIGATOR INTERACTION
+        // ==========================================
+        function fillNavQuery(text) {
+            document.getElementById('nav-input').value = text;
+            sendNavQuery();
+        }
+
+        function handleNavKey(e) {
+            if (e.key === 'Enter') sendNavQuery();
+        }
+
+        async function sendNavQuery() {
+            const inputEl = document.getElementById('nav-input');
+            const queryText = inputEl.value.trim();
+            const langEl = document.getElementById('nav-lang');
+            const language = langEl.value;
+            const sendBtn = document.getElementById('nav-send-btn');
+            
+            if (!queryText) return;
+            
+            inputEl.value = "";
+            appendMessage('nav-chat-messages', 'user', queryText);
+            
+            // Append loading bot message
+            const botMsgId = 'bot-msg-' + Date.now();
+            appendMessage('nav-chat-messages', 'bot', '<div class="loading-spinner"></div> StadiumIQ is thinking...', botMsgId);
+            
+            inputEl.disabled = true;
+            sendBtn.disabled = true;
+
+            try {
+                const response = await fetch('/api/navigate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: queryText, language: language ? language : null })
+                });
+                
+                const data = await response.json();
+                
+                const botMsgEl = document.getElementById(botMsgId);
+                if (response.ok) {
+                    botMsgEl.innerHTML = data.answer;
+                    
+                    // Add badge for language
+                    const badge = document.createElement('span');
+                    badge.className = 'lang-badge';
+                    badge.innerText = `Detected: ${data.detected_language}`;
+                    botMsgEl.appendChild(badge);
+                } else {
+                    botMsgEl.innerText = `Error: ${data.detail || 'Could not fetch response.'}`;
+                }
+            } catch (err) {
+                document.getElementById(botMsgId).innerText = `Error: Network failure.`;
+            } finally {
+                inputEl.disabled = false;
+                sendBtn.disabled = false;
+                inputEl.focus();
+            }
+        }
+
+        // ==========================================
+        // FEATURE 2: CROWD DASHBOARD & LIVE ALERTS
+        // ==========================================
+        async function refreshCrowdStatus(forceRecalculateAlerts = false) {
+            try {
+                const res = await fetch('/api/crowd/status');
+                if (!res.ok) return;
+                const data = await res.json();
+                
+                currentDensityData = data;
+                
+                // Update match clock
+                document.getElementById('header-match-phase').innerText = `${data.match_phase} | ${data.simulated_time}`;
+                
+                // Render heatmap grid
+                const heatmapGrid = document.getElementById('crowd-heatmap');
+                heatmapGrid.innerHTML = '';
+                
+                data.zones.forEach(zone => {
+                    let densityClass = 'low';
+                    if (zone.capacity_pct >= 80) densityClass = 'high';
+                    else if (zone.capacity_pct >= 60) densityClass = 'medium';
+                    
+                    let trendArrow = '→';
+                    if (zone.trend === 'UP') trendArrow = '↑';
+                    else if (zone.trend === 'DOWN') trendArrow = '↓';
+                    
+                    const card = document.createElement('div');
+                    card.className = `zone-card ${densityClass}`;
+                    card.innerHTML = `
+                        <div class="zone-header">
+                            <span class="zone-name">${zone.zone_name}</span>
+                            <span class="zone-trend trend-${zone.trend.toLowerCase()}">${trendArrow} ${zone.trend}</span>
+                        </div>
+                        <div class="density-display">
+                            <span class="density-value">${zone.capacity_pct}</span>
+                            <span class="density-unit">%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: ${zone.capacity_pct}%"></div>
+                        </div>
+                    `;
+                    heatmapGrid.appendChild(card);
+                });
+                
+                // Check if match phase changed, or if user forced refresh
+                if (forceRecalculateAlerts || data.match_phase !== lastMatchPhase) {
+                    lastMatchPhase = data.match_phase;
+                    triggerCrowdAlerts(data);
+                }
+            } catch (err) {
+                console.error("Error polling crowd status", err);
+            }
+        }
+
+        async function triggerCrowdAlerts(statusData) {
+            const listEl = document.getElementById('alerts-list');
+            const spinner = document.getElementById('alerts-loading');
+            const flowBox = document.getElementById('flow-suggestion-box');
+            const flowText = document.getElementById('flow-suggestion-text');
+            
+            spinner.style.display = 'inline-block';
+            
+            try {
+                const res = await fetch('/api/crowd/alert', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        zones: statusData.zones,
+                        match_phase: statusData.match_phase,
+                        simulated_time: statusData.simulated_time
+                    })
+                });
+                
+                const data = await res.json();
+                
+                if (res.ok) {
+                    listEl.innerHTML = '';
+                    data.alerts.forEach(alert => {
+                        const alertItem = document.createElement('div');
+                        alertItem.className = 'alert-item';
+                        alertItem.innerText = alert;
+                        listEl.appendChild(alertItem);
+                    });
+                    
+                    flowText.innerText = data.flow_suggestion;
+                    flowBox.style.display = 'block';
+                } else {
+                    listEl.innerHTML = `<div style="color: var(--danger-red)">Failed to generate alerts: ${data.detail}</div>`;
+                }
+            } catch (err) {
+                listEl.innerHTML = `<div style="color: var(--danger-red)">Failed to reach Gemini API.</div>`;
+            } finally {
+                spinner.style.display = 'none';
+            }
+        }
+
+        // ==========================================
+        // FEATURE 3: VOLUNTEER INTERACTION
+        // ==========================================
+        function fillVolunteerQuery(text) {
+            document.getElementById('volunteer-input').value = text;
+            sendVolunteerQuery();
+        }
+
+        function handleVolunteerKey(e) {
+            if (e.key === 'Enter') sendVolunteerQuery();
+        }
+
+        async function sendVolunteerQuery() {
+            const inputEl = document.getElementById('volunteer-input');
+            const queryText = inputEl.value.trim();
+            const sendBtn = document.getElementById('volunteer-send-btn');
+            
+            if (!queryText) return;
+            
+            inputEl.value = "";
+            appendMessage('volunteer-chat-messages', 'user', queryText);
+            
+            const botMsgId = 'vol-msg-' + Date.now();
+            appendMessage('volunteer-chat-messages', 'bot', '<div class="loading-spinner"></div> Cross-referencing KB & consulting Gemini...', botMsgId);
+            
+            inputEl.disabled = true;
+            sendBtn.disabled = true;
+
+            try {
+                const response = await fetch('/api/volunteer/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: queryText })
+                });
+                
+                const data = await response.json();
+                
+                const botMsgEl = document.getElementById(botMsgId);
+                if (response.ok) {
+                    botMsgEl.innerHTML = data.answer;
+                    
+                    // Show grounded files if present
+                    if (data.grounded_on && data.grounded_on.length > 0) {
+                        const kbSection = document.createElement('div');
+                        kbSection.style.marginTop = '8px';
+                        data.grounded_on.forEach(title => {
+                            const badge = document.createElement('span');
+                            badge.className = 'kb-badge';
+                            badge.innerText = `Grounded on: ${title}`;
+                            badge.style.marginRight = '5px';
+                            kbSection.appendChild(badge);
+                        });
+                        botMsgEl.appendChild(kbSection);
+                    }
+                } else {
+                    botMsgEl.innerText = `Error: ${data.detail || 'Could not fetch response.'}`;
+                }
+            } catch (err) {
+                document.getElementById(botMsgId).innerText = `Error: Network failure.`;
+            } finally {
+                inputEl.disabled = false;
+                sendBtn.disabled = false;
+                inputEl.focus();
+            }
+        }
+
+        // ==========================================
+        // FEATURE 4: SUSTAINABILITY CALCULATION
+        // ==========================================
+        // Maintain split sliders so they sum to 100%
+        function adjustSliders(changedMode) {
+            const modes = ['car', 'bus', 'metro', 'walk'];
+            const valEl = document.getElementById(`val-${changedMode}`);
+            const sliderEl = document.getElementById(`slide-${changedMode}`);
+            const changedVal = parseInt(sliderEl.value);
+            
+            valEl.innerText = changedVal + '%';
+            
+            // Read all slider values
+            let sum = 0;
+            const values = {};
+            modes.forEach(mode => {
+                values[mode] = parseInt(document.getElementById(`slide-${mode}`).value);
+                sum += values[mode];
+            });
+            
+            // If sum is not 100, show validation alert or adjust
+            const totalEl = document.getElementById('slide-total');
+            totalEl.innerText = sum + '%';
+            
+            if (sum === 100) {
+                totalEl.style.color = '#00f2fe';
+                document.getElementById('calc-btn').disabled = false;
+            } else {
+                totalEl.style.color = 'var(--danger-red)';
+                document.getElementById('calc-btn').disabled = false; // Allow submission, backend will check or we let them fix it
+            }
+            
+            runCalculations();
+        }
+        
+        function runCalculations() {
+            const fanCount = parseInt(document.getElementById('fan-count').value) || 0;
+            const avgDistance = parseFloat(document.getElementById('avg-distance').value) || 0;
+            
+            const carPct = parseInt(document.getElementById('slide-car').value) / 100;
+            const busPct = parseInt(document.getElementById('slide-bus').value) / 100;
+            const metroPct = parseInt(document.getElementById('slide-metro').value) / 100;
+            
+            // Factors
+            const carFactor = 0.171;
+            const busFactor = 0.054;
+            const metroFactor = 0.028;
+            
+            const carEmissions = fanCount * carPct * avgDistance * carFactor;
+            const busEmissions = fanCount * busPct * avgDistance * busFactor;
+            const metroEmissions = fanCount * metroPct * avgDistance * metroFactor;
+            
+            const totalEmissions = carEmissions + busEmissions + metroEmissions;
+            const perFanEmissions = fanCount > 0 ? (totalEmissions / fanCount) : 0;
+            
+            document.getElementById('res-total-co2').innerText = totalEmissions.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1});
+            document.getElementById('res-perfan-co2').innerText = perFanEmissions.toFixed(3);
+        }
+
+        async function estimateSustainability() {
+            const fanCount = parseInt(document.getElementById('fan-count').value);
+            const avgDistance = parseFloat(document.getElementById('avg-distance').value);
+            
+            const car = parseInt(document.getElementById('slide-car').value);
+            const bus = parseInt(document.getElementById('slide-bus').value);
+            const metro = parseInt(document.getElementById('slide-metro').value);
+            const walk = parseInt(document.getElementById('slide-walk').value);
+            
+            const calcBtn = document.getElementById('calc-btn');
+            calcBtn.disabled = true;
+            calcBtn.innerHTML = '<span class="loading-spinner"></span> Generating AI recommendations...';
+            
+            try {
+                const response = await fetch('/api/sustainability/estimate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fan_count: fanCount,
+                        transport_split: { car, bus, metro, walk },
+                        avg_distance_km: avgDistance
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Update displays
+                    document.getElementById('res-total-co2').innerText = data.total_kg_co2.toLocaleString();
+                    document.getElementById('res-perfan-co2').innerText = data.per_fan_kg_co2.toFixed(3);
+                    
+                    const listEl = document.getElementById('sustain-suggestions-list');
+                    listEl.innerHTML = '';
+                    
+                    data.suggestions.forEach(sug => {
+                        const li = document.createElement('li');
+                        li.innerText = sug;
+                        listEl.appendChild(li);
+                    });
+                } else {
+                    alert(`Error: ${data.detail || 'Could not estimate footprint'}`);
+                }
+            } catch (err) {
+                alert("Error: Network failure connecting to Sustainability endpoint.");
+            } finally {
+                calcBtn.disabled = false;
+                calcBtn.innerText = 'Calculate & Get GenAI Recommendations';
+            }
+        }
+
+        // Helper to append chat messages
+        function appendMessage(containerId, sender, text, elementId = null) {
+            const container = document.getElementById(containerId);
+            const msg = document.createElement('div');
+            msg.className = `message ${sender}`;
+            if (elementId) msg.id = elementId;
+            msg.innerHTML = text;
+            container.appendChild(msg);
+            container.scrollTop = container.scrollHeight;
+        }
+    </script>
+</body>
+</html>

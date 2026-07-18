@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Medical Emergency Protocol",
+    "description": "Protocol for dealing with sick or injured spectators in seating blocks or concourses.",
+    "protocol": "1. Remain calm. Do not move the patient unless they are in immediate danger.\n2. Contact Stadium Control via radio channel 1 or call 911 internally.\n3. Report details: Exact location (Section/Row/Seat), age/gender of patient, symptoms (e.g., breathing issues, chest pain, fall, bleeding).\n4. Stay with the patient. Direct nearby volunteers to stand at the end of the seating row to guide the First Aid Team/Paramedics.\n5. Keep the immediate area clear of spectators to allow medical personnel space to work."
+  },
+  {
+    "title": "Lost Child or Vulnerable Person",
+    "description": "Steps to follow when a child is separated from parents/guardians, or if a lost child is found.",
+    "protocol": "1. If you find a lost child: Keep them with you, but stay at your assigned post. Do NOT move them around the stadium.\n2. Immediately notify a Zone Supervisor or Stadium Control with details: Child's name, age, clothing description, and location found.\n3. If a parent reports a lost child: Take the parent to the nearest Guest Services booth (located in Zone A, B, and C concourses).\n4. Do NOT make public announcements over the stadium PA system about a lost child for safety/security reasons. Use internal security radios to coordinate search."
+  },
+  {
+    "title": "Accessibility Escort Request",
+    "description": "Assisting fans with limited mobility, visual, or hearing impairments.",
+    "protocol": "1. If a fan requests assistance, check if they need an accessible golf cart shuttle (available near Gate D) or a wheelchair transfer.\n2. Elevators are located in the main lobbies of Zone A and Zone D. Standard escalators do NOT accommodate wheelchairs.\n3. Escort the fan to the nearest elevator or designated accessible seating area. If a wheelchair escort is needed, page Guest Services on Radio Channel 3 for a dedicated wheelchair assistant.\n4. Inform them that accessible restrooms are located near Blocks 104, 118, 125, and 138."
+  },
+  {
+    "title": "Severe Weather Evacuation",
+    "description": "Procedures during extreme weather such as lightning, heavy storms, or extreme heat.",
+    "protocol": "1. If lightning is detected within an 8-mile radius, Stadium Control will trigger a shelter-in-place order.\n2. Direct fans to leave the open seating bowl and proceed immediately to the covered concourse areas.\n3. Instruct fans to stay away from metal structures, poles, and gate entries.\n4. In case of extreme heat: Point fans to the cooling stations located in Zone B and Zone D lobbies. Ensure free water distribution points are active."
+  },
+  {
+    "title": "Security Incident or Suspicious Behavior",
+    "description": "Handling altercations, verbal abuse, suspicious items, or unauthorized area entry.",
+    "protocol": "1. Do NOT attempt to physically intervene in fights, altercations, or block aggressive fans yourself.\n2. Immediately contact Security Control via Radio Channel 2. State: 'Code Orange' followed by location (e.g., Block 114, Row M) and a brief description of the incident.\n3. Keep a safe distance and observe details (clothing, physical features, direction of movement).\n4. For unattended bags/packages: Do NOT touch or move the item. Report it to security immediately, clear an area of 15 meters, and wait for security personnel."
+  },
+  {
+    "title": "Media and Press Inquiries",
+    "description": "How to handle questions from journalists, photographers, or broadcast crews.",
+    "protocol": "1. Volunteers and general staff are NOT authorized to speak on behalf of Stadium Operations, FIFA, or the host city.\n2. Politely decline to answer questions or comment on operational issues or incidents.\n3. Direct all media representatives to the Media Center located near Gate D (West Gate) or ask them to contact the official Press Officer.\n4. Ensure media personnel have their accreditation badges visible at all times in non-public areas."
+  },
+  {
+    "title": "Lost and Found Items",
+    "description": "Handling found personal belongings such as wallets, phones, bags, or tickets.",
+    "protocol": "1. Log all found items immediately at the nearest Guest Services desk (Zone A, B, or C).\n2. If a fan reports a lost item: Direct them to Guest Services or tell them they can file a report online via the StadiumIQ app or website post-match.\n3. If you find high-value items (wallets, phones, passports, passports), deliver them immediately to the Central Security Office in Zone D, do not leave them at Guest Services unattended."
+  },
+  {
+    "title": "Ticket Dispute and Double Seating",
+    "description": "Resolving cases where two parties claim the same seat, or a ticket scanning error occurs.",
+    "protocol": "1. Politely ask to inspect both fans' tickets (check date, match number, block, row, seat, and digital authenticity watermark).\n2. If one ticket is for a different match or date, explain the error and guide them to the Ticket Resolution Office outside Gate A.\n3. If both tickets appear valid and identical for the current match, do NOT attempt to decide who sits there. Call the Ticket Supervisor on radio channel 4 or walk them to the nearest Guest Services desk for re-seating or verification."
+  },
+  {
+    "title": "Intoxicated or Disruptive Spectators",
+    "description": "Dealing with fans under the influence who are disturbing others.",
+    "protocol": "1. Approach the fan calmly and politely. Remind them of the Stadium Code of Conduct.\n2. Do NOT argue or become confrontational. If they refuse to comply or become abusive, step away.\n3. Immediately contact Security Control on Radio Channel 2 or notify your Zone Supervisor.\n4. Alcohol sales at concessions will be cut off at the 75th minute of the match. Monitor concessions in your zone to ensure compliance."
+  },
+  {
+    "title": "Gate Entry Delay or System Outage",
+    "description": "Procedures during ticket scanner failures or crowd build-up at gates.",
+    "protocol": "1. If scanner systems go offline, notify Gate Supervisor immediately. Do NOT let fans through without scans unless ordered by Stadium Control.\n2. Keep fans informed: use bullhorns/megaphones to explain that staff are working on resolving the issue and thank them for their patience.\n3. Open backup physical lanes. Distribute water if queues form in hot weather.\n4. Direct some flow to adjacent open gates (e.g., redirect from Gate B to Gate C if Gate B is heavily congested)."
+  }
+]

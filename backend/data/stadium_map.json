@@ -1,0 +1,104 @@
+{
+  "stadium_name": "StadiumIQ Arena (New York New Jersey)",
+  "capacity": 82500,
+  "gates": [
+    {
+      "name": "Gate A (North Gate)",
+      "description": "Main public entry gate. Direct access to the Arena Central Metro Station via the North Pedestrian Walkway. Best for fans arriving via public transit.",
+      "allowed_tickets": ["General Admission", "Category 1", "Category 2"],
+      "accessible_access": true
+    },
+    {
+      "name": "Gate B (South Gate)",
+      "description": "Public entry gate. Closest to Parking Lot B (South Lot) and the south bus terminal.",
+      "allowed_tickets": ["General Admission", "Category 2", "Category 3"],
+      "accessible_access": true
+    },
+    {
+      "name": "Gate C (East Gate)",
+      "description": "Public entry gate. Closest to Parking Lot C (East Lot) and the regional shuttle drop-off area.",
+      "allowed_tickets": ["General Admission", "Category 3"],
+      "accessible_access": false
+    },
+    {
+      "name": "Gate D (West Gate - VIP & Accessible)",
+      "description": "Dedicated VIP, Media, and Accessible/Mobility-impaired entry gate. Directly adjacent to the VIP Parking Lot and the Rideshare Drop-off Zone. Accessible golf cart shuttle service departs from here.",
+      "allowed_tickets": ["VIP", "Media", "Accessibility Tickets", "Category 1"],
+      "accessible_access": true
+    }
+  ],
+  "zones": [
+    {
+      "name": "Zone A",
+      "location": "North Side",
+      "seating_blocks": ["101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "201", "202", "203", "204", "205", "206", "207", "208", "209", "210"],
+      "concourse_facilities": {
+        "restrooms": ["Restroom A1 (Male)", "Restroom A2 (Female)", "Restroom A3 (Accessible & Gender-Neutral, near Block 104)"],
+        "food_beverages": ["World Cup Grill", "Veggie Corner", "Taco Fiesta"],
+        "first_aid": "First Aid Station 1 (Concourse level, behind Block 108)"
+      }
+    },
+    {
+      "name": "Zone B",
+      "location": "East Side",
+      "seating_blocks": ["111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "211", "212", "213", "214", "215", "216", "217", "218", "219", "220"],
+      "concourse_facilities": {
+        "restrooms": ["Restroom B1 (Male)", "Restroom B2 (Female)", "Restroom B3 (Accessible & Gender-Neutral, near Block 118)"],
+        "food_beverages": ["Burger Station", "Pizza Slice", "Juice Hub"],
+        "first_aid": "None (Use First Aid Station 1 in Zone A or Station 2 in Zone C)"
+      }
+    },
+    {
+      "name": "Zone C",
+      "location": "South Side",
+      "seating_blocks": ["121", "122", "123", "124", "125", "126", "127", "128", "129", "130", "221", "222", "223", "224", "225", "226", "227", "228", "229", "230"],
+      "concourse_facilities": {
+        "restrooms": ["Restroom C1 (Male)", "Restroom C2 (Female)", "Restroom C3 (Accessible & Gender-Neutral, near Block 125)"],
+        "food_beverages": ["Noodle Box", "Halal Eats", "Pretzel Stand"],
+        "first_aid": "First Aid Station 2 (Concourse level, behind Block 127)"
+      }
+    },
+    {
+      "name": "Zone D",
+      "location": "West Side",
+      "seating_blocks": ["131", "132", "133", "134", "135", "136", "137", "138", "139", "140", "231", "232", "233", "234", "235", "236", "237", "238", "239", "240"],
+      "concourse_facilities": {
+        "restrooms": ["Restroom D1 (Male)", "Restroom D2 (Female)", "Restroom D3 (Accessible & Gender-Neutral, near Block 138)"],
+        "food_beverages": ["VIP Lounge (Private)", "The Lounge Bar", "Star Cafe"],
+        "first_aid": "First Aid Station 3 (Inside VIP Lobby, near Gate D)"
+      }
+    }
+  ],
+  "transportation_hubs": [
+    {
+      "type": "Metro",
+      "name": "Arena Central Metro Station",
+      "directions": "Exit the stadium via Gate A. Follow the green line markings along the North Pedestrian Walkway. The station is a 5-minute walk. Trains run every 2 minutes post-match."
+    },
+    {
+      "type": "Parking",
+      "name": "Parking Lot A (North)",
+      "directions": "Located directly outside Gate A. Serves pre-booked vehicle permits only."
+    },
+    {
+      "type": "Parking",
+      "name": "Parking Lot B (South)",
+      "directions": "Exit via Gate B. Walk straight across South Concourse Walkway. Parking spaces B1-B200. Accessible parking located in Row 1."
+    },
+    {
+      "type": "Parking",
+      "name": "Parking Lot C (East)",
+      "directions": "Exit via Gate C. Cross the East Access Road at the designated pedestrian crossing."
+    },
+    {
+      "type": "Rideshare",
+      "name": "Rideshare Pickup/Dropoff Zone (West)",
+      "directions": "Exit via Gate D. Follow the 'Rideshare' signs to the designated lane. Vehicles can only pick up/drop off in this zone."
+    },
+    {
+      "type": "Bus",
+      "name": "East Bus Terminal",
+      "directions": "Exit via Gate C. Shuttle buses to downtown and major transit centers depart from platform 1-10."
+    }
+  ]
+}
