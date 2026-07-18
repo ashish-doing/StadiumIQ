@@ -28,7 +28,7 @@ if not api_key:
 
 # Configure the generative AI client
 genai.configure(api_key=api_key)
-model = genai.GenerativeModel("gemini-2.5-flash-lite")
+model = genai.GenerativeModel("gemini-3.1-flash-lite")
 
 # Zone-to-gate adjacency, used to ground crowd redirect suggestions so
 # Gemini can't recommend a gate that isn't actually near the congested zone.
