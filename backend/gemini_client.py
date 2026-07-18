@@ -161,7 +161,6 @@ You must return a JSON object with the following field:
             "answer": "Error generating response from Knowledge Base."
         }
 
-
 def generate_sustainability_suggestions(
     fan_count: int,
     transport_split: Dict[str, float],
@@ -202,8 +201,8 @@ You must return a JSON object with the following field:
         )
         result = json.loads(response.text)
         if "suggestions" not in result or not isinstance(result["suggestions"], list):
-            result["suggestions"] = ["Encourage fans to use public transport.", "Implement carpooling incentives."]
-        return result
+            return ["Encourage fans to use public transport.", "Implement carpooling incentives."]
+        return result["suggestions"]
     except Exception as e:
         logger.error(f"Error in generate_sustainability_suggestions: {e}")
         return ["Error generating sustainability recommendations."]
