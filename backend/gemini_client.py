@@ -21,9 +21,24 @@ if not api_key:
         "Please provide a valid API key in your environment or .env file."
     )
 
+# NOTE: using google-generativeai (legacy SDK). Google's recommended
+# replacement is google-genai. Pinned here for stability during the
+# hackathon build; migration tracked as a follow-up, not blocking —
+# the legacy SDK is still functional and supported as of this build.
+
 # Configure the generative AI client
 genai.configure(api_key=api_key)
-model = genai.GenerativeModel("gemini-2.5-flash")
+model = genai.GenerativeModel("gemini-2.5-flash-lite")
+
+# Zone-to-gate adjacency, used to ground crowd redirect suggestions so
+# Gemini can't recommend a gate that isn't actually near the congested zone.
+ZONE_GATE_ADJACENCY = {
+    "Zone A": "Gate A (North / Metro)",
+    "Zone B": "Gate B (South / Parking)",
+    "Zone C": "Gate C (East / Bus)",
+    "Zone D": "Gate D (West / VIP & Access)"
+}
+
 
 def generate_navigation_response(query: str, requested_language: Optional[str], map_data: Dict[str, Any]) -> Dict[str, Any]:
     """
@@ -54,7 +69,6 @@ You must return a JSON object with the following fields:
             generation_config={"response_mime_type": "application/json"}
         )
         result = json.loads(response.text)
-        # Ensure fallback keys
         if "answer" not in result:
             result["answer"] = response.text
         if "detected_language" not in result:
@@ -67,10 +81,12 @@ You must return a JSON object with the following fields:
             "detected_language": requested_language or "English"
         }
 
+
 def generate_crowd_alerts(zones_data: List[Dict[str, Any]], match_phase: str, simulated_time: str) -> Dict[str, Any]:
     """
     Calls Gemini to analyze density data and output 1-3 short operational alerts
-    along with a one-line entry/exit flow suggestion.
+    along with a one-line entry/exit flow suggestion. Redirect suggestions are
+    grounded in ZONE_GATE_ADJACENCY so Gemini can't invent a nearby gate.
     """
     prompt = f"""
 You are the StadiumIQ Crowd Intelligence AI. You monitor live crowd density across different stadium zones.
@@ -80,8 +96,11 @@ Match Phase: {match_phase} ({simulated_time})
 Live Zone Densities:
 {json.dumps(zones_data, indent=2)}
 
+Zone-to-Gate Adjacency (use this to pick which gate to redirect fans toward — never recommend a gate not listed here for that zone):
+{json.dumps(ZONE_GATE_ADJACENCY, indent=2)}
+
 Tasks:
-1. Generate 1 to 3 short operational alerts (each max 20 words) addressing any zones with high capacity (especially above 80%) or rising trends, suggesting staff action (e.g. redirecting fans, opening specific gates, mobilizing volunteers, advising concession staff).
+1. Generate 1 to 3 short operational alerts (each max 20 words) addressing any zones with high capacity (especially above 80%) or rising trends, suggesting staff action (e.g. redirecting fans, opening specific gates, mobilizing volunteers, advising concession staff). When recommending a gate redirect, you MUST use the adjacency map above.
 2. Generate a single, concise entry/exit flow suggestion (max 25 words) suited to the match phase.
 
 You must return a JSON object with the following fields:
@@ -105,6 +124,7 @@ You must return a JSON object with the following fields:
             "alerts": ["Error generating crowd intelligence alerts."],
             "flow_suggestion": "Refer to standard gate operational manuals."
         }
+
 
 def generate_volunteer_response(query: str, kb_entries: List[Dict[str, Any]]) -> Dict[str, Any]:
     """
@@ -140,6 +160,7 @@ You must return a JSON object with the following field:
         return {
             "answer": "Error generating response from Knowledge Base."
         }
+
 
 def generate_sustainability_suggestions(
     fan_count: int,
