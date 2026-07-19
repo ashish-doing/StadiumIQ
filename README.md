@@ -1,16 +1,23 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Syne&weight=800&size=24&duration=3000&pause=1000&color=00E5FF&center=true&vCenter=true&width=1200&lines=StadiumIQ+%E2%80%94+GenAI+Stadium+Operations+for+FIFA+2026;Ask+in+Hindi%2C+Spanish%2C+Arabic%2C+or+English+%E2%80%94+grounded%2C+not+guessed;Zone+D+at+92%25+capacity+%E2%80%94+redirect+via+Gate+D;PromptWars+Virtual+%C2%B7+Challenge+4+%C2%B7+July+2026" alt="StadiumIQ" />
+<img src="https://readme-typing-svg.demolab.com?font=Syne&weight=800&size=24&duration=3000&pause=1000&color=4285F4&center=true&vCenter=true&width=1200&lines=StadiumIQ+%E2%80%94+GenAI+Stadium+Operations+for+FIFA+2026;Ask+in+Hindi%2C+Spanish%2C+Arabic%2C+or+English+%E2%80%94+grounded%2C+not+guessed;Zone+D+at+92%25+capacity+%E2%80%94+redirect+via+Gate+D;PromptWars+Virtual+%C2%B7+Challenge+4+%C2%B7+July+2026" alt="StadiumIQ" />
+
+<p>
+  <img src="https://img.shields.io/badge/-4285F4?style=flat-square" width="90"/>
+  <img src="https://img.shields.io/badge/-EA4335?style=flat-square" width="90"/>
+  <img src="https://img.shields.io/badge/-FBBC05?style=flat-square" width="90"/>
+  <img src="https://img.shields.io/badge/-34A853?style=flat-square" width="90"/>
+</p>
 
 </div>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Google-Gemini-4285F4?style=for-the-badge&logo=google" />
-  <img src="https://img.shields.io/badge/Built%20with-Google%20Antigravity-8a3ffc?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
-  <img src="https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
-  <img src="https://img.shields.io/badge/Tests-7%20passing-brightgreen?style=for-the-badge&logo=pytest" />
+  <img src="https://img.shields.io/badge/Google-Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white" />
+  <img src="https://img.shields.io/badge/Built%20with-Google%20Antigravity-FBBC05?style=for-the-badge&logo=google&logoColor=white" />
+  <img src="https://img.shields.io/badge/FastAPI-EA4335?style=for-the-badge&logo=fastapi&logoColor=white" />
+  <img src="https://img.shields.io/badge/Python-3.11-34A853?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/Docker-4285F4?style=for-the-badge&logo=docker&logoColor=white" />
+  <img src="https://img.shields.io/badge/Tests-7%20passing-34A853?style=for-the-badge&logo=pytest&logoColor=white" />
 </p>
 
 <p align="center">
@@ -19,8 +26,9 @@
 
 <p align="center">
   🚀 <a href="https://stadiumiq-2ip5.onrender.com">Live App</a> &nbsp;•&nbsp;
+  🌐 <a href="https://ashish-doing.github.io/StadiumIQ">Landing Page</a> &nbsp;•&nbsp;
   📖 <a href="https://stadiumiq-2ip5.onrender.com/docs">API Docs (Swagger)</a> &nbsp;•&nbsp;
-  💻 <a href="https://github.com/ashish-doing/StadiumIQ">GitHub</a> &nbsp;•&nbsp;
+  📐 <a href="./ARCHITECTURE.md">Architecture</a> &nbsp;•&nbsp;
   🛠️ <a href="./CONTEXT.md">How it was built</a> &nbsp;•&nbsp;
   ⚡ <a href="#quick-start">Quick Start</a>
 </p>
@@ -38,13 +46,14 @@ FIFA World Cup 2026 spans three host countries and a genuinely multilingual fanb
 - **Volunteers** — query emergency and operational protocols and get answers grounded in an actual knowledge base, not improvised
 - **Sustainability planners** — estimate per-match carbon footprint from the transport mix and get suggestions targeted at the actual split, not generic advice
 
-Every AI response is grounded in real structured data passed into the Gemini prompt — the model is explicitly instructed not to invent gates, protocols, or numbers that aren't in the provided context.
+Every AI response is grounded in real structured data passed into the Gemini prompt — the model is explicitly instructed not to invent gates, protocols, or numbers that aren't in the provided context. Full data-flow diagrams for all four features are in **[ARCHITECTURE.md](./ARCHITECTURE.md)**.
 
 ---
 
 ## Live Demo
 
 [![StadiumIQ Live App](https://img.shields.io/badge/▶%20Try%20Live%20App-Render-46E3B7?style=for-the-badge)](https://stadiumiq-2ip5.onrender.com)
+[![StadiumIQ Landing Page](https://img.shields.io/badge/🌐%20Landing%20Page-GitHub%20Pages-4285F4?style=for-the-badge)](https://ashish-doing.github.io/StadiumIQ)
 
 > **Note:** the live app runs on Render's free tier, which spins down after periods of inactivity. If it's been idle, the first request may take 30–60 seconds to wake up — this is expected, not a bug. Subsequent requests are fast.
 
@@ -57,11 +66,13 @@ Every AI response is grounded in real structured data passed into the Gemini pro
 | 🗺️ **Fan Navigator** | Natural-language, auto-language-detected stadium navigation, grounded in venue map data, with a live interactive GPS map (Leaflet, real MetLife Stadium / "New York/New Jersey Stadium" coordinates) | `POST /api/navigate` |
 | 📊 **Crowd Intelligence Dashboard** | Simulated live zone density + AI-generated operational alerts, redirect suggestions grounded in a real zone-to-gate adjacency map | `GET /api/crowd/status`, `POST /api/crowd/alert` |
 | 🤝 **Volunteer / Staff Assistant** | Protocol Q&A grounded in a stadium operations knowledge base, honest when nothing matches | `POST /api/volunteer/query` |
-| 🌱 **Sustainability Tracker** | Per-match CO₂ estimate from transport mix + AI suggestions tailored to the actual split | `POST /api/sustainability/estimate` |
+| 🌱 **Sustainability Tracker** | Per-match CO₂ estimate from transport mix + AI suggestions tailored to the actual split, auto-balancing sliders that always sum to 100% | `POST /api/sustainability/estimate` |
 
 ---
 
 ## Screenshots
+
+**The App**
 
 | | |
 |---|---|
@@ -69,6 +80,13 @@ Every AI response is grounded in real structured data passed into the Gemini pro
 | *Fan Navigator — multilingual, grounded in stadium map data, live GPS venue map* | *Crowd Intelligence — zone density + Gemini operations alerts grounded in gate adjacency* |
 | ![Volunteer Assistant](docs/screenshots/screenshot-volunteer.png) | ![Sustainability Tracker](docs/screenshots/screenshot-sustainability.png) |
 | *Volunteer Assistant — grounded protocol answers with source shown* | *Sustainability Tracker — transport-mix-aware CO₂ estimate with tailored suggestions* |
+
+**The Landing Page**
+
+| | |
+|---|---|
+| ![Landing page hero](docs/screenshots/screenshot-landing-hero.png) | ![Landing page problem framing](docs/screenshots/screenshot-landing-problem.png) |
+| *Hero section — stat row in the Google four-color system* | *Problem framing — match day with and without StadiumIQ* |
 
 ---
 
@@ -92,7 +110,7 @@ flowchart LR
     G --> L["Gemini API"]
 ```
 
-Every feature router calls through a single `gemini_client.py` — one choke point for all Gemini calls, one place to swap models, one place the grounding-instruction pattern lives.
+Every feature router calls through a single `gemini_client.py` — one choke point for all Gemini calls, one place to swap models, one place the grounding-instruction pattern lives. **[See ARCHITECTURE.md](./ARCHITECTURE.md)** for the full system diagram plus a per-feature sequence diagram for all four endpoints, including the adjacency-grounding fix in detail.
 
 ---
 
@@ -257,21 +275,10 @@ stadiumiq/
 ├── Dockerfile
 ├── .env.example
 ├── CONTEXT.md                   Real Antigravity build log
+├── ARCHITECTURE.md              Full system diagram + per-feature sequence flows
 ├── LICENSE
 └── README.md
 ```
-
----
-
-## Related Projects
-
-StadiumIQ draws on patterns established across earlier hackathon builds:
-
-| Project | Event | What Carries Over |
-|---|---|---|
-| [FineMargins](https://github.com/ashish-doing/finemargins) | IBM SkillsBuild — "AI Inside the Match" | Grounding-over-fabrication discipline; explicit "what this system cannot know" transparency, applied here to the volunteer assistant and crowd alerts |
-| [AgentWatch](https://github.com/ashish-doing/agentwatch) | Splunk Agentic Ops Hackathon | Real-time dashboard patterns; live-updating operational intelligence UI |
-| [RepoTerrain](https://github.com/ashish-doing/repoterrain) | Google Cloud Rapid Agent Hackathon | Render deployment conventions, Docker packaging discipline |
 
 ---
 
