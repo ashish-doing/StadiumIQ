@@ -196,7 +196,7 @@ Note the split of responsibility: the carbon math is deterministic Python, never
 | **Volunteer KB** | `backend/data/volunteer_kb.json` | 8 protocol entries — Volunteer grounding source |
 | **Crowd Simulator** | `backend/data/crowd_simulator.py` | Seeded, time-based density generator — not live sensor data |
 | **Frontend** | `frontend/index.html` | Single-file dashboard, 4 tabs, Leaflet GPS map, auto-balancing sliders |
-| **Tests** | `tests/test_stadiumiq.py` | 17 unit tests — requires a `GEMINI_API_KEY` env var (dummy value works) |
+| **Tests** | `tests/test_stadiumiq.py`, `tests/test_gemini_endpoints.py` | 27 unit tests total — data/model validation plus mocked coverage of all 4 Gemini-calling endpoints (requires a `GEMINI_API_KEY` env var, dummy value works) |
 | **Model Checker** | `scripts/check_model.py` | Dev utility — tests live model availability against your API key |
 | **Landing Page** | `docs/index.html` | GitHub Pages marketing site |
 

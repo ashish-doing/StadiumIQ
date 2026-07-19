@@ -18,7 +18,7 @@
   <img src="https://img.shields.io/badge/FastAPI-EA4335?style=for-the-badge&logo=fastapi&logoColor=white" />
   <img src="https://img.shields.io/badge/Python-3.11-34A853?style=for-the-badge&logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/Docker-4285F4?style=for-the-badge&logo=docker&logoColor=white" />
-  <img src="https://img.shields.io/badge/Tests-17%20passing-34A853?style=for-the-badge&logo=pytest&logoColor=white" />
+  <img src="https://img.shields.io/badge/Tests-27%20passing-34A853?style=for-the-badge&logo=pytest&logoColor=white" />
 </p>
 
 <p align="center">
@@ -122,7 +122,7 @@ Every feature router calls through a single `gemini_client.py` — one choke poi
 | Maps | Leaflet.js + OpenStreetMap | Free, no API key, live GPS-based venue navigation |
 | Config | python-dotenv | `GEMINI_API_KEY` from environment, never hardcoded |
 | Deployment | Docker on Render (free tier) | Live public preview |
-| Testing | pytest | 17 unit tests — sustainability math, KB honesty, adjacency grounding (requires a `GEMINI_API_KEY` env var, dummy value works) |
+| Testing | pytest | 27 unit tests across 2 files — data/model validation plus mocked coverage of all 4 Gemini-calling endpoints (requires a `GEMINI_API_KEY` env var, dummy value works) |
 | Dev tool | Google Antigravity | Agentic IDE used to build the full codebase — see [CONTEXT.md](./CONTEXT.md) |
 
 **Note on model choice:** the Gemini 2.5 family (`gemini-2.5-flash`, `gemini-2.5-flash-lite`) began returning premature 404s on newer API keys during this build, ahead of their official October 2026 deprecation date. `scripts/check_model.py` tests live availability against your own key and confirmed `gemini-3.1-flash-lite` as the stable working choice — see the script if you need to re-verify after a Google-side model change.
@@ -183,7 +183,7 @@ set GEMINI_API_KEY=dummy_test_key
 pytest tests/ -v
 ```
 
-17 tests. A `GEMINI_API_KEY` must be set (any placeholder value works — no real API calls are made).
+27 tests. A `GEMINI_API_KEY` must be set (any placeholder value works — no real API calls are made).
 
 ---
 
@@ -263,7 +263,8 @@ stadiumiq/
 │       ├── volunteer_kb.json    Grounding source for protocol Q&A
 │       └── crowd_simulator.py   Seeded live-look density generator
 ├── tests/
-│   └── test_stadiumiq.py        17 unit tests (requires GEMINI_API_KEY env var, dummy value is fine)
+│   ├── test_stadiumiq.py           17 unit tests — data/model validation, no Gemini calls
+│   └── test_gemini_endpoints.py    10 mocked tests — covers all 4 Gemini-calling endpoints
 ├── frontend/
 │   └── index.html               Single-file dashboard, live GPS map
 ├── scripts/
