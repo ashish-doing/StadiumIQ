@@ -99,7 +99,7 @@
   .msg .kb-tag{display:inline-block;margin-top:.5rem;margin-right:.35rem;font-family:var(--font-mono);font-size:.65rem;color:var(--g-blue);border:1px solid var(--g-blue);padding:.15rem .4rem;letter-spacing:.4px;text-transform:uppercase}
   .chat-input-row{display:flex;gap:.6rem;padding:.85rem;border-top:1px solid var(--line);background:var(--surface)}
   .chat-input-row input[type=text]{flex:1;background:#0d0f13;border:1px solid var(--line);color:var(--text);padding:.65rem .85rem;font-family:var(--font-body);font-size:.9rem}
-  .chat-input-row input[type=text]:focus{outline:none;border-color:var(--g-blue)}
+  .chat-input-row input[type=text]:focus{outline:2px solid var(--g-blue);outline-offset:1px;border-color:var(--g-blue)}
   select{background:#0d0f13;color:var(--text-dim);border:1px solid var(--line);padding:.65rem;font-family:var(--font-mono);font-size:.78rem}
   .btn{background:var(--g-blue);color:#fff;border:none;font-family:var(--font-sign);font-weight:700;font-size:.95rem;letter-spacing:.4px;text-transform:uppercase;padding:.65rem 1.2rem;cursor:pointer;transition:background .15s}
   .btn:hover{background:#5c95f5}
@@ -177,29 +177,29 @@
 </header>
 
 <nav>
-  <div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('tab-navigator')">Navigator</button>
-    <button class="tab-btn" onclick="switchTab('tab-crowd')">Crowd Intel</button>
-    <button class="tab-btn" onclick="switchTab('tab-volunteer')">Staff Assist</button>
-    <button class="tab-btn" onclick="switchTab('tab-sustainability')">Sustainability</button>
+  <div class="nav-tabs" role="tablist" aria-label="StadiumIQ sections">
+    <button id="tabbtn-navigator" class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-navigator" onclick="switchTab('tab-navigator')">Navigator</button>
+    <button id="tabbtn-crowd" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-crowd" onclick="switchTab('tab-crowd')">Crowd Intel</button>
+    <button id="tabbtn-volunteer" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-volunteer" onclick="switchTab('tab-volunteer')">Staff Assist</button>
+    <button id="tabbtn-sustainability" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-sustainability" onclick="switchTab('tab-sustainability')">Sustainability</button>
   </div>
 </nav>
 
 <main>
 
   <!-- NAVIGATOR -->
-  <section id="tab-navigator" class="tab-content active">
+  <section id="tab-navigator" class="tab-content active" role="tabpanel" aria-labelledby="tabbtn-navigator">
     <div class="grid-2">
       <div class="panel">
         <span class="eyebrow">Fan Navigator</span>
         <div class="panel-head"><h2>Ask your way around</h2></div>
         <p class="desc">Directions, restrooms, transit, and gating rules, grounded in the venue map. Auto-detects and replies in English, Hindi, Spanish, or Arabic.</p>
         <div class="chat-box">
-          <div class="chat-messages" id="nav-chat-messages">
+          <div class="chat-messages" id="nav-chat-messages" role="log" aria-live="polite">
             <div class="msg bot">Welcome to StadiumIQ Navigator. Where do you need to go?</div>
           </div>
           <div class="chat-input-row">
-            <select id="nav-lang">
+            <select id="nav-lang" aria-label="Response language">
               <option value="">Auto</option>
               <option value="English">EN</option>
               <option value="Hindi">HI</option>
@@ -237,7 +237,7 @@
   </section>
 
   <!-- CROWD -->
-  <section id="tab-crowd" class="tab-content">
+  <section id="tab-crowd" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-crowd">
     <div class="grid-2">
       <div class="panel">
         <span class="eyebrow">Crowd Intelligence</span>
@@ -258,14 +258,14 @@
   </section>
 
   <!-- VOLUNTEER -->
-  <section id="tab-volunteer" class="tab-content">
+  <section id="tab-volunteer" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-volunteer">
     <div class="grid-2">
       <div class="panel">
         <span class="eyebrow">Staff & Volunteer Assist</span>
         <div class="panel-head"><h2>Protocol lookup</h2></div>
         <p class="desc">Queries are matched against the operations knowledge base first — answers are restricted to what's actually in it.</p>
         <div class="chat-box">
-          <div class="chat-messages" id="volunteer-chat-messages"><div class="msg bot">Staff Coordinator ready. Ask about emergencies, lost items, security, or ticket disputes.</div></div>
+          <div class="chat-messages" id="volunteer-chat-messages" role="log" aria-live="polite"><div class="msg bot">Staff Coordinator ready. Ask about emergencies, lost items, security, or ticket disputes.</div></div>
           <div class="chat-input-row">
             <input type="text" id="volunteer-input" placeholder="e.g. Lost child protocol, VIP elevator location…" onkeydown="handleVolunteerKey(event)">
             <button class="btn" id="volunteer-send-btn" onclick="sendVolunteerQuery()">Query KB</button>
@@ -286,23 +286,23 @@
   </section>
 
   <!-- SUSTAINABILITY -->
-  <section id="tab-sustainability" class="tab-content">
+  <section id="tab-sustainability" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-sustainability">
     <div class="grid-2">
       <div class="panel">
         <span class="eyebrow">Sustainability</span>
         <div class="panel-head"><h2>Footprint estimator</h2></div>
         <p class="desc">Transportation emissions for this match, by mode.</p>
-        <div class="form-group"><label>Total fan attendance</label><input type="number" id="fan-count" value="40000" min="1" oninput="runCalculations()"></div>
+        <div class="form-group"><label for="fan-count">Total fan attendance</label><input type="number" id="fan-count" value="40000" min="1" oninput="runCalculations()"></div>
         <div class="form-group">
           <label>Transport mode split</label>
-          <div class="slider-row"><div class="slider-top"><span class="mode">Private car</span><span class="pct" id="val-car">60%</span></div><input type="range" id="slide-car" min="0" max="100" value="60" oninput="adjustSliders('car')"></div>
-          <div class="slider-row"><div class="slider-top"><span class="mode">Shuttle bus</span><span class="pct" id="val-bus">15%</span></div><input type="range" id="slide-bus" min="0" max="100" value="15" oninput="adjustSliders('bus')"></div>
-          <div class="slider-row"><div class="slider-top"><span class="mode">Metro / train</span><span class="pct" id="val-metro">20%</span></div><input type="range" id="slide-metro" min="0" max="100" value="20" oninput="adjustSliders('metro')"></div>
-          <div class="slider-row"><div class="slider-top"><span class="mode">Walking / cycling</span><span class="pct" id="val-walk">5%</span></div><input type="range" id="slide-walk" min="0" max="100" value="5" oninput="adjustSliders('walk')"></div>
+          <div class="slider-row"><div class="slider-top"><span class="mode">Private car</span><span class="pct" id="val-car">60%</span></div><input type="range" id="slide-car" min="0" max="100" value="60" aria-label="Private car percentage" oninput="adjustSliders('car')"></div>
+          <div class="slider-row"><div class="slider-top"><span class="mode">Shuttle bus</span><span class="pct" id="val-bus">15%</span></div><input type="range" id="slide-bus" min="0" max="100" value="15" aria-label="Shuttle bus percentage" oninput="adjustSliders('bus')"></div>
+          <div class="slider-row"><div class="slider-top"><span class="mode">Metro / train</span><span class="pct" id="val-metro">20%</span></div><input type="range" id="slide-metro" min="0" max="100" value="20" aria-label="Metro or train percentage" oninput="adjustSliders('metro')"></div>
+          <div class="slider-row"><div class="slider-top"><span class="mode">Walking / cycling</span><span class="pct" id="val-walk">5%</span></div><input type="range" id="slide-walk" min="0" max="100" value="5" aria-label="Walking or cycling percentage" oninput="adjustSliders('walk')"></div>
         </div>
         <div class="split-total"><span>Total allocated</span><b id="slide-total">100%</b></div>
         <div class="split-note">Moving a slider auto-adjusts the others proportionally — the split always stays locked at 100%, no need to balance it by hand.</div>
-        <div class="form-group"><label>Average commute distance (km)</label><input type="number" id="avg-distance" value="12" min="1" step="0.5" oninput="runCalculations()"></div>
+        <div class="form-group"><label for="avg-distance">Average commute distance (km)</label><input type="number" id="avg-distance" value="12" min="1" step="0.5" oninput="runCalculations()"></div>
         <button class="btn" id="calc-btn" onclick="estimateSustainability()" style="width:100%">Calculate & get recommendations</button>
       </div>
       <div class="panel">
@@ -445,10 +445,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function switchTab(tabId){
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
   document.getElementById(tabId).classList.add('active');
   const ids=['tab-navigator','tab-crowd','tab-volunteer','tab-sustainability'];
-  document.querySelectorAll('.tab-btn')[ids.indexOf(tabId)].classList.add('active');
+  const activeBtn=document.querySelectorAll('.tab-btn')[ids.indexOf(tabId)];
+  activeBtn.classList.add('active');
+  activeBtn.setAttribute('aria-selected','true');
   if(tabId==='tab-navigator' && map){ setTimeout(()=>map.invalidateSize(), 50); }
 }
 

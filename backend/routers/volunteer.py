@@ -81,17 +81,15 @@ async def query_volunteer_kb(req: VolunteerQueryRequest):
     
     # Retrieve top 2 grounding protocols
     matched_protocols = retrieve_protocols(req.query, volunteer_kb_data, limit=2)
-    
-    # Generate the grounded response from Gemini
-    result = generate_volunteer_response(query=req.query, kb_entries=matched_protocols)
-    
-    # List the titles of the grounded protocols
     grounded_titles = [proto["title"] for proto in matched_protocols]
-    
-    # If no protocols matched at all, provide a default response indicating no grounding
+
+    # If no protocols matched, skip the Gemini call entirely — there's nothing
+    # to ground the answer in, so calling the API here would only waste a
+    # request and be discarded below.
     if not matched_protocols:
         answer = "I'm sorry, but that query does not seem to match any protocol in my Knowledge Base."
     else:
+        result = generate_volunteer_response(query=req.query, kb_entries=matched_protocols)
         answer = result.get("answer", "")
         
     return VolunteerQueryResponse(

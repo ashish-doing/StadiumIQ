@@ -26,7 +26,7 @@ async def analyze_crowd_alerts(req: CrowdAlertRequest):
         raise HTTPException(status_code=400, detail="Zones data cannot be empty.")
     
     # Format zone status as standard dictionary for prompt
-    zones_list = [zone.dict() for zone in req.zones]
+    zones_list = [zone.model_dump() for zone in req.zones]
     
     result = generate_crowd_alerts(
         zones_data=zones_list,
