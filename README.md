@@ -18,7 +18,7 @@
   <img src="https://img.shields.io/badge/FastAPI-EA4335?style=for-the-badge&logo=fastapi&logoColor=white" />
   <img src="https://img.shields.io/badge/Python-3.11-34A853?style=for-the-badge&logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/Docker-4285F4?style=for-the-badge&logo=docker&logoColor=white" />
-  <img src="https://img.shields.io/badge/Tests-7%20passing-34A853?style=for-the-badge&logo=pytest&logoColor=white" />
+  <img src="https://img.shields.io/badge/Tests-17%20passing-34A853?style=for-the-badge&logo=pytest&logoColor=white" />
 </p>
 
 <p align="center">
@@ -122,7 +122,7 @@ Every feature router calls through a single `gemini_client.py` — one choke poi
 | Maps | Leaflet.js + OpenStreetMap | Free, no API key, live GPS-based venue navigation |
 | Config | python-dotenv | `GEMINI_API_KEY` from environment, never hardcoded |
 | Deployment | Docker on Render (free tier) | Live public preview |
-| Testing | pytest | 7 offline unit tests — sustainability math, KB honesty, adjacency grounding |
+| Testing | pytest | 17 unit tests — sustainability math, KB honesty, adjacency grounding (requires a `GEMINI_API_KEY` env var, dummy value works) |
 | Dev tool | Google Antigravity | Agentic IDE used to build the full codebase — see [CONTEXT.md](./CONTEXT.md) |
 
 **Note on model choice:** the Gemini 2.5 family (`gemini-2.5-flash`, `gemini-2.5-flash-lite`) began returning premature 404s on newer API keys during this build, ahead of their official October 2026 deprecation date. `scripts/check_model.py` tests live availability against your own key and confirmed `gemini-3.1-flash-lite` as the stable working choice — see the script if you need to re-verify after a Google-side model change.
@@ -179,10 +179,11 @@ Open **http://127.0.0.1:8000**
 
 ```bash
 pip install pytest
-pytest backend/tests/ -v
+set GEMINI_API_KEY=dummy_test_key
+pytest tests/ -v
 ```
 
-7 tests, all offline — no API key or network required.
+17 tests. A `GEMINI_API_KEY` must be set (any placeholder value works — no real API calls are made).
 
 ---
 
@@ -248,6 +249,7 @@ To redeploy your own copy: connect the repo on [render.com](https://render.com) 
 ```
 stadiumiq/
 ├── backend/
+│   ├── __init__.py
 │   ├── main.py                  FastAPI entrypoint, CORS, routing
 │   ├── gemini_client.py         Single choke point for all Gemini calls
 │   ├── models.py                Pydantic request/response schemas
@@ -256,12 +258,12 @@ stadiumiq/
 │   │   ├── crowd.py             /api/crowd/status, /api/crowd/alert
 │   │   ├── volunteer.py         /api/volunteer/query
 │   │   └── sustainability.py    /api/sustainability/estimate
-│   ├── data/
-│   │   ├── stadium_map.json     Grounding source for navigation
-│   │   ├── volunteer_kb.json    Grounding source for protocol Q&A
-│   │   └── crowd_simulator.py   Seeded live-look density generator
-│   └── tests/
-│       └── test_stadiumiq.py    7 offline unit tests
+│   └── data/
+│       ├── stadium_map.json     Grounding source for navigation
+│       ├── volunteer_kb.json    Grounding source for protocol Q&A
+│       └── crowd_simulator.py   Seeded live-look density generator
+├── tests/
+│   └── test_stadiumiq.py        17 unit tests (requires GEMINI_API_KEY env var, dummy value is fine)
 ├── frontend/
 │   └── index.html               Single-file dashboard, live GPS map
 ├── scripts/
