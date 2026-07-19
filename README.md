@@ -1,13 +1,16 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Syne&weight=800&size=24&duration=3000&pause=1000&color=4285F4&center=true&vCenter=true&width=1200&lines=StadiumIQ+%E2%80%94+GenAI+Stadium+Operations+for+FIFA+2026;Ask+in+Hindi%2C+Spanish%2C+Arabic%2C+or+English+%E2%80%94+grounded%2C+not+guessed;Zone+D+at+92%25+capacity+%E2%80%94+redirect+via+Gate+D;PromptWars+Virtual+%C2%B7+Challenge+4+%C2%B7+July+2026" alt="StadiumIQ" />
+<img src="https://readme-typing-svg.demolab.com?font=Syne&weight=800&size=24&duration=3000&pause=1000&color=4285F4&center=true&vCenter=true&width=1000&lines=StadiumIQ+%E2%80%94+GenAI+Stadium+Operations" /><br>
+<img src="https://readme-typing-svg.demolab.com?font=Syne&weight=700&size=18&duration=3000&pause=1000&color=EA4335&center=true&vCenter=true&width=1000&lines=Ask+in+Hindi%2C+Spanish%2C+Arabic%2C+or+English+%E2%80%94+grounded%2C+not+guessed" /><br>
+<img src="https://readme-typing-svg.demolab.com?font=Syne&weight=700&size=18&duration=3000&pause=1000&color=FBBC05&center=true&vCenter=true&width=1000&lines=Zone+D+at+92%25+capacity+%E2%80%94+redirect+via+Gate+D" /><br>
+<img src="https://readme-typing-svg.demolab.com?font=Syne&weight=700&size=18&duration=3000&pause=1000&color=34A853&center=true&vCenter=true&width=1000&lines=PromptWars+Virtual+%C2%B7+Challenge+4+%C2%B7+July+2026" />
 
-<p>
-  <img src="https://img.shields.io/badge/-4285F4?style=flat-square" width="90"/>
-  <img src="https://img.shields.io/badge/-EA4335?style=flat-square" width="90"/>
-  <img src="https://img.shields.io/badge/-FBBC05?style=flat-square" width="90"/>
-  <img src="https://img.shields.io/badge/-34A853?style=flat-square" width="90"/>
-</p>
+<table><tr>
+<td width="120" height="8" bgcolor="#4285F4"></td>
+<td width="120" height="8" bgcolor="#EA4335"></td>
+<td width="120" height="8" bgcolor="#FBBC05"></td>
+<td width="120" height="8" bgcolor="#34A853"></td>
+</tr></table>
 
 </div>
 
@@ -25,12 +28,7 @@
 </p>
 
 <p align="center">
-  🚀 <a href="https://stadiumiq-2ip5.onrender.com">Live App</a> &nbsp;•&nbsp;
-  🌐 <a href="https://ashish-doing.github.io/StadiumIQ">Landing Page</a> &nbsp;•&nbsp;
-  📖 <a href="https://stadiumiq-2ip5.onrender.com/docs">API Docs (Swagger)</a> &nbsp;•&nbsp;
-  📐 <a href="./ARCHITECTURE.md">Architecture</a> &nbsp;•&nbsp;
-  🛠️ <a href="./CONTEXT.md">How it was built</a> &nbsp;•&nbsp;
-  ⚡ <a href="#quick-start">Quick Start</a>
+<a href="https://stadiumiq-2ip5.onrender.com"><b>Live App</b></a> · <a href="https://ashish-doing.github.io/StadiumIQ">Landing</a> · <a href="https://stadiumiq-2ip5.onrender.com/docs">API Docs</a> · <a href="./ARCHITECTURE.md">Architecture</a> · <a href="./CONTEXT.md">Build Log</a> · <a href="#quick-start">Quick Start</a>
 </p>
 
 ---
@@ -72,6 +70,13 @@ Every AI response is grounded in real structured data passed into the Gemini pro
 
 ## Screenshots
 
+**The Landing Page**
+
+| | |
+|---|---|
+| ![Landing page hero](docs/screenshots/screenshot-landing-hero.png) | ![Landing page problem framing](docs/screenshots/screenshot-landing-problem.png) |
+| *Hero section — stat row in the Google four-color system* | *Problem framing — match day with and without StadiumIQ* |
+
 **The App**
 
 | | |
@@ -80,13 +85,6 @@ Every AI response is grounded in real structured data passed into the Gemini pro
 | *Fan Navigator — multilingual, grounded in stadium map data, live GPS venue map* | *Crowd Intelligence — zone density + Gemini operations alerts grounded in gate adjacency* |
 | ![Volunteer Assistant](docs/screenshots/screenshot-volunteer.png) | ![Sustainability Tracker](docs/screenshots/screenshot-sustainability.png) |
 | *Volunteer Assistant — grounded protocol answers with source shown* | *Sustainability Tracker — transport-mix-aware CO₂ estimate with tailored suggestions* |
-
-**The Landing Page**
-
-| | |
-|---|---|
-| ![Landing page hero](docs/screenshots/screenshot-landing-hero.png) | ![Landing page problem framing](docs/screenshots/screenshot-landing-problem.png) |
-| *Hero section — stat row in the Google four-color system* | *Problem framing — match day with and without StadiumIQ* |
 
 ---
 
@@ -110,7 +108,8 @@ flowchart LR
     G --> L["Gemini API"]
 ```
 
-Every feature router calls through a single `gemini_client.py` — one choke point for all Gemini calls, one place to swap models, one place the grounding-instruction pattern lives. **[See ARCHITECTURE.md](./ARCHITECTURE.md)** for the full system diagram plus a per-feature sequence diagram for all four endpoints, including the adjacency-grounding fix in detail.
+Every feature router calls through a single `gemini_client.py` — one choke point for all Gemini calls, one place to swap models, one place the grounding-instruction pattern lives. 
+**[See ARCHITECTURE.md](./ARCHITECTURE.md)** for the full system diagram plus a per-feature sequence diagram for all four endpoints, including the adjacency-grounding fix in detail.
 
 ---
 
