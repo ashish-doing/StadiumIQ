@@ -5,10 +5,10 @@
 <img src="https://readme-typing-svg.demolab.com?font=Syne&weight=700&size=18&duration=3000&pause=1000&color=FBBC05&center=true&vCenter=true&width=1000&lines=Zone+D+at+92%25+capacity+%E2%80%94+redirect+via+Gate+D" /><br>
 <img src="https://readme-typing-svg.demolab.com?font=Syne&weight=700&size=18&duration=3000&pause=1000&color=34A853&center=true&vCenter=true&width=1000&lines=PromptWars+Virtual+%C2%B7+Challenge+4+%C2%B7+July+2026" />
 
-<img src="https://img.shields.io/static/v1?label=&message=&color=4285F4" height="10" width="150"/>
-<img src="https://img.shields.io/static/v1?label=&message=&color=EA4335" height="10" width="150"/>
-<img src="https://img.shields.io/static/v1?label=&message=&color=FBBC05" height="10" width="150"/>
-<img src="https://img.shields.io/static/v1?label=&message=&color=34A853" height="10" width="150"/>
+<img src="https://img.shields.io/static/v1?label=%20&message=%20&color=4285F4" height="10" width="150"/>
+<img src="https://img.shields.io/static/v1?label=%20&message=%20&color=EA4335" height="10" width="150"/>
+<img src="https://img.shields.io/static/v1?label=%20&message=%20&color=FBBC05" height="10" width="150"/>
+<img src="https://img.shields.io/static/v1?label=%20&message=%20&color=34A853" height="10" width="150"/>
 
 </div>
 
@@ -48,8 +48,8 @@ Every AI response is grounded in real structured data passed into the Gemini pro
 
 ## Live Demo
 
-[![StadiumIQ Live App](https://img.shields.io/badge/▶%20Try%20Live%20App-Render-46E3B7?style=for-the-badge)](https://stadiumiq-2ip5.onrender.com)
-[![StadiumIQ Landing Page](https://img.shields.io/badge/🌐%20Landing%20Page-GitHub%20Pages-4285F4?style=for-the-badge)](https://ashish-doing.github.io/StadiumIQ)
+[![StadiumIQ Live App](https://img.shields.io/badge/%E2%96%B6%20Try%20Live%20App-Render-46E3B7?style=for-the-badge)](https://stadiumiq-2ip5.onrender.com)
+[![StadiumIQ Landing Page](https://img.shields.io/badge/%F0%9F%8C%90%20Landing%20Page-GitHub%20Pages-4285F4?style=for-the-badge)](https://ashish-doing.github.io/StadiumIQ)
 
 > **Note:** the live app runs on Render's free tier, which spins down after periods of inactivity. If it's been idle, the first request may take 30–60 seconds to wake up — this is expected, not a bug. Subsequent requests are fast.
 
@@ -284,8 +284,8 @@ stadiumiq/
 
 **Ashish Kumar** — B.Tech ECE, IIIT Guwahati (Batch 2024)
 
-[![GitHub](https://img.shields.io/badge/GitHub-ashish--doing-181717?style=flat-square&logo=github)](https://github.com/ashish-doing)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-ashish--kumar-0A66C2?style=flat-square&logo=linkedin)](https://linkedin.com/in/ashish-kumar-014aaa3b9)
+[![GitHub](https://img.shields.io/badge/GitHub-ashish--doing-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/ashish-doing)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-ashish--kumar-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/ashish-kumar-014aaa3b9)
 
 ---
 
