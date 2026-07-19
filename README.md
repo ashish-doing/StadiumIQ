@@ -5,12 +5,10 @@
 <img src="https://readme-typing-svg.demolab.com?font=Syne&weight=700&size=18&duration=3000&pause=1000&color=FBBC05&center=true&vCenter=true&width=1000&lines=Zone+D+at+92%25+capacity+%E2%80%94+redirect+via+Gate+D" /><br>
 <img src="https://readme-typing-svg.demolab.com?font=Syne&weight=700&size=18&duration=3000&pause=1000&color=34A853&center=true&vCenter=true&width=1000&lines=PromptWars+Virtual+%C2%B7+Challenge+4+%C2%B7+July+2026" />
 
-<table><tr>
-<td width="120" height="8" bgcolor="#4285F4"></td>
-<td width="120" height="8" bgcolor="#EA4335"></td>
-<td width="120" height="8" bgcolor="#FBBC05"></td>
-<td width="120" height="8" bgcolor="#34A853"></td>
-</tr></table>
+<img src="https://img.shields.io/static/v1?label=&message=&color=4285F4" height="10" width="150"/>
+<img src="https://img.shields.io/static/v1?label=&message=&color=EA4335" height="10" width="150"/>
+<img src="https://img.shields.io/static/v1?label=&message=&color=FBBC05" height="10" width="150"/>
+<img src="https://img.shields.io/static/v1?label=&message=&color=34A853" height="10" width="150"/>
 
 </div>
 
@@ -108,7 +106,8 @@ flowchart LR
     G --> L["Gemini API"]
 ```
 
-Every feature router calls through a single `gemini_client.py` — one choke point for all Gemini calls, one place to swap models, one place the grounding-instruction pattern lives. 
+Every feature router calls through a single `gemini_client.py` — one choke point for all Gemini calls, one place to swap models, one place the grounding-instruction pattern lives.
+
 **[See ARCHITECTURE.md](./ARCHITECTURE.md)** for the full system diagram plus a per-feature sequence diagram for all four endpoints, including the adjacency-grounding fix in detail.
 
 ---
