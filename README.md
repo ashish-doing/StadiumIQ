@@ -1,15 +1,16 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Syne&weight=800&size=24&duration=3000&pause=1000&color=00E5FF&center=true&vCenter=true&width=1200&lines=StadiumIQ+%E2%80%94+GenAI+Stadium+Operations+for+FIFA+2026;Ask+in+Hindi%2C+Spanish%2C+Arabic%2C+or+English+%E2%80%94+grounded%2C+not+guessed;Zone+B+at+95%25+capacity+%E2%80%94+redirect+to+Gate+D;PromptWars+Virtual+%C2%B7+Challenge+4+%C2%B7+July+2026" alt="StadiumIQ" />
+<img src="https://readme-typing-svg.demolab.com?font=Syne&weight=800&size=24&duration=3000&pause=1000&color=00E5FF&center=true&vCenter=true&width=1200&lines=StadiumIQ+%E2%80%94+GenAI+Stadium+Operations+for+FIFA+2026;Ask+in+Hindi%2C+Spanish%2C+Arabic%2C+or+English+%E2%80%94+grounded%2C+not+guessed;Zone+D+at+92%25+capacity+%E2%80%94+redirect+via+Gate+D;PromptWars+Virtual+%C2%B7+Challenge+4+%C2%B7+July+2026" alt="StadiumIQ" />
 
 </div>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Google-Gemini%202.5%20Flash-4285F4?style=for-the-badge&logo=google" />
+  <img src="https://img.shields.io/badge/Google-Gemini-4285F4?style=for-the-badge&logo=google" />
   <img src="https://img.shields.io/badge/Built%20with-Google%20Antigravity-8a3ffc?style=for-the-badge" />
   <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
   <img src="https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
+  <img src="https://img.shields.io/badge/Tests-7%20passing-brightgreen?style=for-the-badge&logo=pytest" />
 </p>
 
 <p align="center">
@@ -20,6 +21,7 @@
   🚀 <a href="https://stadiumiq-2ip5.onrender.com">Live App</a> &nbsp;•&nbsp;
   📖 <a href="https://stadiumiq-2ip5.onrender.com/docs">API Docs (Swagger)</a> &nbsp;•&nbsp;
   💻 <a href="https://github.com/ashish-doing/StadiumIQ">GitHub</a> &nbsp;•&nbsp;
+  🛠️ <a href="./CONTEXT.md">How it was built</a> &nbsp;•&nbsp;
   ⚡ <a href="#quick-start">Quick Start</a>
 </p>
 
@@ -31,8 +33,8 @@
 
 FIFA World Cup 2026 spans three host countries and a genuinely multilingual fanbase. StadiumIQ is a GenAI operations layer that helps four different groups on match day:
 
-- **Fans** — ask for directions, restrooms, or transit in plain language, in Hindi, Spanish, Arabic, or English
-- **Operations staff** — watch simulated zone-by-zone crowd density and get AI-generated redirect alerts before a bottleneck forms
+- **Fans** — ask for directions, restrooms, or transit in plain language, in Hindi, Spanish, Arabic, or English, with a **live GPS map** showing real gate positions around the actual host venue
+- **Operations staff** — watch simulated zone-by-zone crowd density and get AI-generated redirect alerts, grounded in a real zone-to-gate adjacency map so recommendations can't invent a gate that isn't actually nearby
 - **Volunteers** — query emergency and operational protocols and get answers grounded in an actual knowledge base, not improvised
 - **Sustainability planners** — estimate per-match carbon footprint from the transport mix and get suggestions targeted at the actual split, not generic advice
 
@@ -52,8 +54,8 @@ Every AI response is grounded in real structured data passed into the Gemini pro
 
 | Feature | What It Does | Endpoint |
 |---|---|---|
-| 🗺️ **Fan Navigator** | Natural-language, auto-language-detected stadium navigation, grounded in venue map data | `POST /api/navigate` |
-| 📊 **Crowd Intelligence Dashboard** | Simulated live zone density heatmap + AI-generated operational alerts and flow suggestions | `GET /api/crowd/status`, `POST /api/crowd/alert` |
+| 🗺️ **Fan Navigator** | Natural-language, auto-language-detected stadium navigation, grounded in venue map data, with a live interactive GPS map (Leaflet, real MetLife Stadium / "New York/New Jersey Stadium" coordinates) | `POST /api/navigate` |
+| 📊 **Crowd Intelligence Dashboard** | Simulated live zone density + AI-generated operational alerts, redirect suggestions grounded in a real zone-to-gate adjacency map | `GET /api/crowd/status`, `POST /api/crowd/alert` |
 | 🤝 **Volunteer / Staff Assistant** | Protocol Q&A grounded in a stadium operations knowledge base, honest when nothing matches | `POST /api/volunteer/query` |
 | 🌱 **Sustainability Tracker** | Per-match CO₂ estimate from transport mix + AI suggestions tailored to the actual split | `POST /api/sustainability/estimate` |
 
@@ -61,14 +63,12 @@ Every AI response is grounded in real structured data passed into the Gemini pro
 
 ## Screenshots
 
-*(Add your screenshots here before submission — see `docs/screenshots/` convention used in your other projects)*
-
 | | |
 |---|---|
 | ![Fan Navigator](docs/screenshots/screenshot-navigator.png) | ![Crowd Intelligence](docs/screenshots/screenshot-crowd.png) |
-| *Fan Navigator — multilingual, grounded in stadium map data* | *Crowd Intelligence — live heatmap + Gemini operations alerts* |
+| *Fan Navigator — multilingual, grounded in stadium map data, live GPS venue map* | *Crowd Intelligence — zone density + Gemini operations alerts grounded in gate adjacency* |
 | ![Volunteer Assistant](docs/screenshots/screenshot-volunteer.png) | ![Sustainability Tracker](docs/screenshots/screenshot-sustainability.png) |
-| *Volunteer Assistant — grounded protocol answers with source shown* | *Sustainability Tracker — transport-mix-aware CO₂ estimate* |
+| *Volunteer Assistant — grounded protocol answers with source shown* | *Sustainability Tracker — transport-mix-aware CO₂ estimate with tailored suggestions* |
 
 ---
 
@@ -76,7 +76,7 @@ Every AI response is grounded in real structured data passed into the Gemini pro
 
 ```mermaid
 flowchart LR
-    A["Frontend\nsingle-file HTML/CSS/JS"] --> B["FastAPI backend\nbackend/main.py"]
+    A["Frontend\nsingle-file HTML/CSS/JS + Leaflet GPS map"] --> B["FastAPI backend\nbackend/main.py"]
     B --> C["Navigator router"]
     B --> D["Crowd router"]
     B --> E["Volunteer router"]
@@ -87,8 +87,9 @@ flowchart LR
     F --> G
     C -.grounded by.-> H["stadium_map.json"]
     E -.grounded by.-> I["volunteer_kb.json"]
-    D -.fed by.-> J["crowd_simulator.py"]
-    G --> K["Gemini 2.5 Flash API"]
+    D -.grounded by.-> J["Zone-to-gate adjacency map"]
+    D -.fed by.-> K["crowd_simulator.py"]
+    G --> L["Gemini API"]
 ```
 
 Every feature router calls through a single `gemini_client.py` — one choke point for all Gemini calls, one place to swap models, one place the grounding-instruction pattern lives.
@@ -100,17 +101,21 @@ Every feature router calls through a single `gemini_client.py` — one choke poi
 | Layer | Technology | Purpose |
 |---|---|---|
 | Backend | FastAPI, Python 3.11, Uvicorn | API + static file serving |
-| AI | Gemini 2.5 Flash (`google-generativeai` SDK) | Navigation, alerts, protocol Q&A, sustainability suggestions |
+| AI | Gemini (`gemini-3.1-flash-lite`) via `google-generativeai` SDK | Navigation, alerts, protocol Q&A, sustainability suggestions |
 | Frontend | Vanilla HTML/CSS/JS, single file | No framework, no build step |
+| Maps | Leaflet.js + OpenStreetMap | Free, no API key, live GPS-based venue navigation |
 | Config | python-dotenv | `GEMINI_API_KEY` from environment, never hardcoded |
 | Deployment | Docker on Render (free tier) | Live public preview |
-| Dev tool | Google Antigravity | Agentic IDE used to build the full codebase |
+| Testing | pytest | 7 offline unit tests — sustainability math, KB honesty, adjacency grounding |
+| Dev tool | Google Antigravity | Agentic IDE used to build the full codebase — see [CONTEXT.md](./CONTEXT.md) |
+
+**Note on model choice:** the Gemini 2.5 family (`gemini-2.5-flash`, `gemini-2.5-flash-lite`) began returning premature 404s on newer API keys during this build, ahead of their official October 2026 deprecation date. `scripts/check_model.py` tests live availability against your own key and confirmed `gemini-3.1-flash-lite` as the stable working choice — see the script if you need to re-verify after a Google-side model change.
 
 ---
 
 ## Built with Google Antigravity
 
-This project was built end-to-end inside **Google Antigravity**, as required for PromptWars Virtual submissions — the full backend, frontend, and Docker configuration were generated and iterated on through Antigravity's agent, then deployed and debugged interactively.
+This project was built end-to-end inside **Google Antigravity**, as required for PromptWars Virtual submissions. **[CONTEXT.md](./CONTEXT.md)** documents the real build session in detail — the mission brief, actual prompts used, and the real problems hit along the way (a dead model reference, an API project access issue, a Hugging Face Spaces policy change requiring a platform pivot, and a Render port-binding fix) — not a cleaned-up retelling.
 
 ---
 
@@ -144,7 +149,7 @@ Edit `.env`:
 GEMINI_API_KEY=your_actual_key_here
 ```
 
-Get a key at [aistudio.google.com](https://aistudio.google.com) — the app will fail to start with a clear error if this is missing.
+Get a key at [aistudio.google.com](https://aistudio.google.com) — the app will fail to start with a clear error if this is missing. If Gemini models seem unavailable, run `python scripts/check_model.py` to see which models actually work with your key.
 
 ### 4. Run
 
@@ -153,6 +158,15 @@ uvicorn backend.main:app --reload
 ```
 
 Open **http://127.0.0.1:8000**
+
+### 5. Run tests
+
+```bash
+pip install pytest
+pytest backend/tests/ -v
+```
+
+7 tests, all offline — no API key or network required.
 
 ---
 
@@ -164,7 +178,7 @@ Full interactive Swagger docs are auto-generated by FastAPI and live at **[/docs
 |---|---|---|
 | `POST` | `/api/navigate` | Multilingual fan navigation, grounded in stadium map |
 | `GET` | `/api/crowd/status` | Current simulated zone density |
-| `POST` | `/api/crowd/alert` | AI-generated operational alerts from density data |
+| `POST` | `/api/crowd/alert` | AI-generated operational alerts, grounded in zone-gate adjacency |
 | `POST` | `/api/volunteer/query` | Protocol Q&A grounded in volunteer knowledge base |
 | `POST` | `/api/sustainability/estimate` | Carbon footprint estimate + tailored suggestions |
 | `GET` | `/docs` | Interactive Swagger UI |
@@ -197,7 +211,7 @@ POST /api/sustainability/estimate
   "avg_distance_km": 12
 }
 ```
-Returns total and per-fan CO₂, with suggestions specifically addressing the 60% car share.
+Returns total and per-fan CO₂ (55,824 kg total, 1.396 kg/fan), with suggestions specifically addressing the 60% car share.
 
 ---
 
@@ -226,15 +240,24 @@ stadiumiq/
 │   │   ├── crowd.py             /api/crowd/status, /api/crowd/alert
 │   │   ├── volunteer.py         /api/volunteer/query
 │   │   └── sustainability.py    /api/sustainability/estimate
-│   └── data/
-│       ├── stadium_map.json     Grounding source for navigation
-│       ├── volunteer_kb.json    Grounding source for protocol Q&A
-│       └── crowd_simulator.py   Seeded live-look density generator
+│   ├── data/
+│   │   ├── stadium_map.json     Grounding source for navigation
+│   │   ├── volunteer_kb.json    Grounding source for protocol Q&A
+│   │   └── crowd_simulator.py   Seeded live-look density generator
+│   └── tests/
+│       └── test_stadiumiq.py    7 offline unit tests
 ├── frontend/
-│   └── index.html               Single-file dashboard, dark theme
+│   └── index.html               Single-file dashboard, live GPS map
+├── scripts/
+│   └── check_model.py           Dev utility: tests which Gemini models work with your key
+├── docs/
+│   ├── index.html               GitHub Pages landing page
+│   └── screenshots/
 ├── requirements.txt
 ├── Dockerfile
 ├── .env.example
+├── CONTEXT.md                   Real Antigravity build log
+├── LICENSE
 └── README.md
 ```
 
@@ -271,6 +294,6 @@ MIT — see [LICENSE](LICENSE) for details.
 
 Built for **PromptWars Virtual — Challenge 4: Smart Stadiums & Tournament Operations**
 
-*Powered by Google Gemini 2.5 Flash · Google Antigravity · FastAPI*
+*Powered by Google Gemini · Google Antigravity · FastAPI · Leaflet*
 
 </div>
